@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head> <meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta name="robots" content="index, follow">
+	<meta name="author" content="Abhishek Chaudhary">
+
+<meta property="og:title" content="Bank Buzz - Know Your Bank Status">
+<meta property="og:description" content="Download Bank Buzz - Know Your Bank Status. Stay updated on your bank's real-time status, cash availability, server running status, crowd in bank, and more. Hassle-free banking at your fingertips.">
+<meta property="og:image" content="https://imabhishek.tech/bankbuzz/img/logof.png">
+<meta property="og:url" content="https://imabhishek.tech/bankbuzz/">
+
+	
+     <meta name="description" content="Download Bank Buzz - Your Personal Banking Assistant App. Stay updated on your bank's status, ATM PIN setup, and more. Hassle-free banking at your fingertips.">
+    <meta name="keywords" content="Bank Buzz, Real-time Bank Status, Banking App, Mobile Banking, Bank Information, Bank Services, IFSC Code Finder, ATM PIN Guide, Google Pay Setup, Error Codes, Bank Helpline, Aadhar Card Recovery, ATM Card Retrieval, Money Management, Download Bank Buzz App, Hassle-free Banking, Banking Companion, Financial Services, Bank Notice Updates, Customer Communication">
+
+    <!-- Favicon -->
+    <link href="https://imabhishek.tech/bankbuzz/img/favicon.ico" rel="icon">
+
+</head> 
+    <title>SBI Personal Loan Calculator</title>
+    <style>
+        /* CSS code */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0efef94;
+            margin: 10%;
+            padding: 0;
+            
+        }
+
+        .calculator-container {
+            width: 80%;
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #ff6633;
+            padding: 20px;
+            border: 1px solid #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgb(255, 255, 255)255;
+        }
+
+        h1 {
+            text-align: center;
+            text-shadow: rgb(255, 255, 255)255;
+            color: #ffffff;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        input[type="text"] {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        #result span {
+            color: rgb(255, 255, 255);
+        }
+
+        #entered-values {
+            text-align: center;
+            font-size: 16px;
+            margin-top: 10px;
+            color: #000000;
+            display: none;
+        }
+        #displayed-values, #entered-values {
+    
+    color: #ffffff;
+}
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <h1>EMI/लोन कैलकुलेटर</h1>
+        <label for="loan-amount">ऋण राशि (INR):</label>
+
+        <input type="text" id="loan-amount" placeholder="रुपए में ऋण राशि दर्ज करें">
+
+        <label for="interest-rate">ब्याज दर (%):</label>
+        <input type="text" id="interest-rate" placeholder="ब्याज दर दर्ज करें">
+
+        <label for="loan-term">ऋण अवधि (वर्षों में):</label>
+        <input type="text" id="loan-term" placeholder="ऋण अवधि दर्ज करें">
+
+        <div id="entered-values" style="color: #000000;"><a style="font-size: 20px; font-weight: bolder;">प्रवेशित मूल्य:<br></a> <span id="displayed-values">-</span></div>
+
+
+<hr>
+        
+
+        <div id="result">
+            मासिक भुगतान: ₹ <span id="monthly-payment">0.00</span><br>
+            कुल ब्याज: ₹ <span id="total-interest">0.00</span><br><br>
+
+            <button id="calculate">कैलकुलेट करें</button>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript code for calculating the loan payment
+        document.getElementById("calculate").addEventListener("click", function () {
+            const loanAmount = parseFloat(document.getElementById("loan-amount").value.replace(/,/g, ''));
+            const interestRate = parseFloat(document.getElementById("interest-rate").value.replace(/,/g, ''));
+            const loanTerm = parseFloat(document.getElementById("loan-term").value.replace(/,/g, ''));
+
+            if (isNaN(loanAmount) || isNaN(interestRate) || isNaN(loanTerm)) {
+                alert("कृपया सभी फ़ील्ड्स में मान दर्ज करें।");
+                return;
+            }
+
+            const monthlyInterest = (interestRate / 100) / 12;
+            const numberOfPayments = loanTerm * 12;
+
+            const monthlyPayment = (loanAmount * monthlyInterest) / (1 - Math.pow(1 + monthlyInterest, -numberOfPayments));
+            
+            const totalInterest = (monthlyPayment * numberOfPayments) - loanAmount;
+
+            // Format the amounts with commas
+            const formattedMonthlyPayment = formatNumberWithCommas(monthlyPayment.toFixed(2));
+            const formattedTotalInterest = formatNumberWithCommas(totalInterest.toFixed(2));
+
+            document.getElementById("monthly-payment").textContent = formattedMonthlyPayment;
+            document.getElementById("total-interest").textContent = formattedTotalInterest;
+
+           // Display entered values in Hindi with line breaks
+const enteredValues = `<b>ऋण राशि:</b> ₹${formatNumberWithCommas(loanAmount.toFixed(2))}<br><b>ब्याज दर:</b> ${interestRate}%<br><b>ऋण अवधि:</b> ${loanTerm} वर्ष`;
+document.getElementById("displayed-values").innerHTML = enteredValues;
+document.getElementById("entered-values").style.display = "block";
+});
+
+        // Function to format a number with commas
+        function formatNumberWithCommas(number) {
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // Add event listeners to format input values as they are typed
+        const inputFields = document.querySelectorAll('input[type="text"]');
+        inputFields.forEach(function(inputField) {
+            inputField.addEventListener('input', function() {
+                this.value = formatNumberWithCommas(this.value.replace(/,/g, ''));
+            });
+        });
+    </script>
+</body>
+</html>
